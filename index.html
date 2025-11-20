@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Museo Larco AR - Prototipo</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+
+    <div id="start-screen" class="overlay-screen">
+        <h1>Museo Larco AR</h1>
+        <p>Bienvenido a la guía aumentada.</p>
+        <ul>
+            <li>Permite el uso de la cámara.</li>
+            <li>Apunta al marcador "Hiro".</li>
+            <li>Interactúa con las piezas.</li>
+        </ul>
+        <button id="start-btn">COMENZAR EXPERIENCIA</button>
+    </div>
+
+    <div id="ar-ui" class="ui-container hidden">
+        <div class="info-card">
+            <h2 id="piece-title">Detectando...</h2>
+            <p id="piece-desc">Apunta tu cámara a una pieza exhibida.</p>
+            
+            <div class="controls">
+                <button id="audio-btn" class="btn-icon">🔊 Escuchar</button>
+                <button id="fav-btn" class="btn-icon">⭐ Favorito</button>
+            </div>
+            
+            <div id="subtitles" class="subtitles hidden"></div>
+        </div>
+    </div>
+
+    <a-scene 
+        embedded 
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        renderer="logarithmicDepthBuffer: true;"
+        vr-mode-ui="enabled: false"
+        gesture-detector 
+        id="scene">
+
+        <a-assets>
+            <a-asset-item id="modelo-ejemplo" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"></a-asset-item>
+        </a-assets>
+
+        <a-marker 
+            preset="hiro" 
+            raycaster="objects: .clickable"
+            emitevents="true"
+            cursor="fuse: false; rayOrigin: mouse;"
+            id="marker-piece-1">
+            
+            <a-entity 
+                id="model-1"
+                gltf-model="#modelo-ejemplo"
+                position="0 0 0"
+                scale="0.5 0.5 0.5"
+                class="clickable"
+                gesture-handler="minScale: 0.25; maxScale: 10">
+            </a-entity>
+        </a-marker>
+
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script src="script.js"></script>
+</body>
+</html>
