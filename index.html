@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Museo Larco AR - Prototipo</title>
+    <title>Museo Larco AR</title>
     <link rel="stylesheet" href="styles.css">
     
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -15,25 +15,24 @@
 
     <div id="start-screen" class="overlay-screen">
         <h1>Museo Larco AR</h1>
-        <p>Bienvenido a la guía aumentada.</p>
+        <p>Bienvenido a la guía interactiva.</p>
         <ul>
             <li>Permite el uso de la cámara.</li>
-            <li>Apunta al marcador "Hiro".</li>
-            <li>Interactúa con las piezas.</li>
+            <li>Apunta a las imágenes de la exhibición.</li>
+            <li>Descubre contenido exclusivo.</li>
         </ul>
-        <button id="start-btn">COMENZAR EXPERIENCIA</button>
+        <button id="start-btn">INICIAR VISITA</button>
     </div>
 
     <div id="ar-ui" class="ui-container hidden">
         <div class="info-card">
             <h2 id="piece-title">Detectando...</h2>
-            <p id="piece-desc">Apunta tu cámara a una pieza exhibida.</p>
+            <p id="piece-desc">Escaneando pieza...</p>
             
             <div class="controls">
-                <button id="audio-btn" class="btn-icon">🔊 Escuchar</button>
+                <button id="audio-btn" class="btn-icon">🔊 Escuchar Guía</button>
                 <button id="fav-btn" class="btn-icon">⭐ Favorito</button>
             </div>
-            
             <div id="subtitles" class="subtitles hidden"></div>
         </div>
     </div>
@@ -47,24 +46,37 @@
         id="scene">
 
         <a-assets>
-            <a-asset-item id="modelo-ejemplo" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"></a-asset-item>
+            <a-asset-item id="modelo-huaco" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"></a-asset-item>
         </a-assets>
 
         <a-marker 
-            preset="hiro" 
-            raycaster="objects: .clickable"
-            emitevents="true"
-            cursor="fuse: false; rayOrigin: mouse;"
-            id="marker-piece-1">
-            
-            <a-entity 
-                id="model-1"
-                gltf-model="#modelo-ejemplo"
-                position="0 0 0"
-                scale="0.5 0.5 0.5"
-                class="clickable"
-                gesture-handler="minScale: 0.25; maxScale: 10">
-            </a-entity>
+            type="pattern" 
+            url="assets/markers/huaco-retrato.patt" 
+            raycaster="objects: .clickable" 
+            emitevents="true" 
+            cursor="fuse: false; rayOrigin: mouse;" 
+            id="marker-huaco">
+            <a-entity gltf-model="#modelo-huaco" scale="0.5 0.5 0.5" class="clickable" gesture-handler></a-entity>
+        </a-marker>
+
+        <a-marker 
+            type="pattern" 
+            url="assets/markers/pattern-nariguera-de-oro.patt" 
+            raycaster="objects: .clickable" 
+            emitevents="true" 
+            cursor="fuse: false; rayOrigin: mouse;" 
+            id="marker-oro">
+            <a-box position="0 0.5 0" material="color: #FFD700; opacity: 0.9" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000" class="clickable" gesture-handler></a-box>
+        </a-marker>
+
+        <a-marker 
+            type="pattern" 
+            url="assets/markers/felino.patt" 
+            raycaster="objects: .clickable" 
+            emitevents="true" 
+            cursor="fuse: false; rayOrigin: mouse;" 
+            id="marker-felino">
+            <a-sphere position="0 0.5 0" radius="0.5" material="color: #CD5C5C; opacity: 0.9" class="clickable" gesture-handler></a-sphere>
         </a-marker>
 
         <a-entity camera></a-entity>

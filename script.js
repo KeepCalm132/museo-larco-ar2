@@ -1,14 +1,26 @@
-// DATOS DE LAS PIEZAS (Simulados)
+// DATOS DE LAS 3 PIEZAS
 const museumData = {
-    "marker-piece-1": {
-        title: "Huaco Retrato Mochica",
-        description: "Cerámica escultórica que representa con gran realismo el rostro de un dignatario Moche.",
-        audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // Audio de prueba
-        subtitles: "Este huaco retrato representa a un gobernante Moche... observe los detalles faciales y la pintura bicolor."
+    "marker-huaco": {
+        title: "Huaco Retrato Moche",
+        description: "Cerámica escultórica realista. Los moches eran maestros en retratar expresiones humanas y psicológicas en arcilla.",
+        audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
+        subtitles: "Observe los detalles del rostro. Este huaco representa a un gobernante de la élite Moche..."
+    },
+    "marker-oro": {
+        title: "Nariguera de Oro",
+        description: "Ornamento funerario de gran tamaño. El oro simbolizaba la energía solar y el poder divino de los gobernantes.",
+        audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
+        subtitles: "Esta nariguera cubría la boca del gobernante, dándole una apariencia sobrenatural y divina..."
+    },
+    "marker-felino": {
+        title: "Botella Felina",
+        description: "Representación de un felino (jaguar). En la cosmovisión andina, el felino representa la fuerza y el mundo terrenal (Kay Pacha).",
+        audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
+        subtitles: "El felino es un animal sagrado, vinculado al poder, la guerra y el gobierno..."
     }
 };
 
-// REFERENCIAS DOM
+// ELEMENTOS DE LA INTERFAZ
 const startScreen = document.getElementById('start-screen');
 const startBtn = document.getElementById('start-btn');
 const uiContainer = document.getElementById('ar-ui');
@@ -21,48 +33,48 @@ const subtitlesEl = document.getElementById('subtitles');
 let currentAudio = null;
 let currentPieceId = null;
 
-// 1. PANTALLA DE INICIO
+// 1. INICIAR EXPERIENCIA
 startBtn.addEventListener('click', () => {
     startScreen.style.display = 'none';
-    // Pedir permiso explícito para reproducir audio (política de navegadores)
-    if(currentAudio) currentAudio.play().then(() => currentAudio.pause());
+    // Intento de reproducir y pausar para desbloquear audio en iOS/Android
+    if(currentAudio) currentAudio.play().then(() => currentAudio.pause()).catch(e => {});
 });
 
-// 2. DETECCIÓN DE MARCADORES
+// 2. SISTEMA DE DETECCIÓN (Funciona para los 3 marcadores)
 AFRAME.registerComponent('markerhandler', {
     init: function () {
+        // Cuando encuentra el marcador
         this.el.addEventListener('markerFound', () => {
-            console.log("Marcador encontrado");
             const markerId = this.el.id;
             currentPieceId = markerId;
-            showPieceInfo(markerId);
             uiContainer.classList.remove('hidden');
+            updateUI(markerId);
         });
 
+        // Cuando pierde el marcador
         this.el.addEventListener('markerLost', () => {
-            console.log("Marcador perdido");
             uiContainer.classList.add('hidden');
             stopAudio();
         });
     }
 });
 
-// Asignar el handler al marcador en el HTML
-document.getElementById('marker-piece-1').setAttribute('markerhandler', '');
+// Asignar la lógica a los 3 marcadores del HTML
+document.getElementById('marker-huaco').setAttribute('markerhandler', '');
+document.getElementById('marker-oro').setAttribute('markerhandler', '');
+document.getElementById('marker-felino').setAttribute('markerhandler', '');
 
-// 3. MOSTRAR INFORMACIÓN
-function showPieceInfo(id) {
+// 3. ACTUALIZAR TEXTOS
+function updateUI(id) {
     const data = museumData[id];
     if (!data) return;
 
     titleEl.innerText = data.title;
     descEl.innerText = data.description;
-    
-    // Verificar si es favorito
     checkFavorite(data.title);
 }
 
-// 4. AUDIO Y SUBTÍTULOS
+// 4. CONTROL DE AUDIO
 audioBtn.addEventListener('click', () => {
     if (!currentPieceId) return;
     const data = museumData[currentPieceId];
@@ -75,6 +87,8 @@ audioBtn.addEventListener('click', () => {
 });
 
 function playAudio(src, text) {
+    if(currentAudio) stopAudio(); // Asegurar que no suenen dos a la vez
+    
     currentAudio = new Audio(src);
     currentAudio.play();
     
@@ -92,7 +106,7 @@ function stopAudio() {
         currentAudio.pause();
         currentAudio = null;
     }
-    audioBtn.innerText = "🔊 Escuchar";
+    audioBtn.innerText = "🔊 Escuchar Guía";
     audioBtn.classList.remove('btn-active');
     subtitlesEl.classList.add('hidden');
 }
@@ -105,18 +119,15 @@ favBtn.addEventListener('click', () => {
     let favorites = JSON.parse(localStorage.getItem('museumFavorites')) || [];
     
     if (favorites.includes(title)) {
-        // Quitar
         favorites = favorites.filter(item => item !== title);
         alert("Eliminado de favoritos");
-        favBtn.classList.remove('btn-active');
     } else {
-        // Agregar
         favorites.push(title);
         alert("Guardado en favoritos");
-        favBtn.classList.add('btn-active');
     }
     
     localStorage.setItem('museumFavorites', JSON.stringify(favorites));
+    checkFavorite(title);
 });
 
 function checkFavorite(title) {
