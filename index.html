@@ -53,7 +53,7 @@
                 <a-asset-item id="modelo-felino" src="assets/models/felino.glb"></a-asset-item>
             </a-assets>
 
-        <a-marker 
+<a-marker 
             type="pattern" 
             url="assets/markers/huaco-retrato.patt" 
             raycaster="objects: .clickable" 
@@ -61,15 +61,47 @@
             cursor="fuse: false; rayOrigin: mouse;" 
             id="marker-huaco">
             
-            <a-entity 
-                gltf-model="#modelo-huaco" 
-                scale="15 15 15" 
-                position="0 0 0" 
-                class="clickable" 
-                gesture-handler>
+            <a-entity scale="1 1 1" rotation="0 0 0" position="0 0 0" class="clickable" gesture-handler>
+                
+                <a-sphere 
+                    color="#8B4513" 
+                    radius="0.5" 
+                    position="0 0.5 0"
+                    material="roughness: 0.8; src: url(assets/textura.jpg)"> </a-sphere>
+
+                <a-sphere 
+                    color="#F5DEB3" 
+                    radius="0.35" 
+                    position="0 0.5 0.25"
+                    scale="1 1 0.5">
+                </a-sphere>
+
+                <a-torus 
+                    color="#8B4513" 
+                    radius="0.3" 
+                    radius-tubular="0.05" 
+                    arc="180"
+                    rotation="0 90 0" 
+                    position="0 0.9 0">
+                </a-torus>
+
+                <a-cylinder 
+                    color="#8B4513" 
+                    radius="0.08" 
+                    height="0.3" 
+                    position="0 1.15 0">
+                </a-cylinder>
+
+                <a-text 
+                    value="Retrato Moche" 
+                    align="center" 
+                    position="0 1.5 0" 
+                    scale="0.8 0.8 0.8"
+                    color="white"
+                    side="double">
+                </a-text>
             </a-entity>
 
-            <a-box position="0 0.5 1" material="color: red; opacity: 0.5" scale="0.5 0.5 0.5"></a-box>
         </a-marker>
 
             <a-marker 
