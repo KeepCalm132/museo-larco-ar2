@@ -1,21 +1,22 @@
 // DATOS DE LAS 3 PIEZAS
+// DATOS DE LAS 3 PIEZAS (Actualizado con rutas de audio locales)
 const museumData = {
     "marker-huaco": {
         title: "Huaco Retrato Moche",
         description: "Cerámica escultórica realista. Los moches eran maestros en retratar expresiones humanas y psicológicas en arcilla.",
-        audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
-        subtitles: "Observe los detalles del rostro. Este huaco representa a un gobernante de la élite Moche..."
+        audioSrc: "assets/audio/huaco.mp3",  // <--- AQUÍ ESTÁ EL CAMBIO
+        subtitles: "Este huaco retrato representa a un gobernante de la élite Moche..."
     },
     "marker-oro": {
         title: "Nariguera de Oro",
         description: "Ornamento funerario de gran tamaño. El oro simbolizaba la energía solar y el poder divino de los gobernantes.",
-        audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
+        audioSrc: "assets/audio/oro.mp3",    // <--- AQUÍ ESTÁ EL CAMBIO
         subtitles: "Esta nariguera cubría la boca del gobernante, dándole una apariencia sobrenatural y divina..."
     },
     "marker-felino": {
         title: "Botella Felina",
-        description: "Representación de un felino (jaguar). En la cosmovisión andina, el felino representa la fuerza y el mundo terrenal (Kay Pacha).",
-        audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
+        description: "Representación de un felino (jaguar). En la cosmovisión andina, el felino representa la fuerza y el mundo terrenal.",
+        audioSrc: "assets/audio/felino.mp3", // <--- AQUÍ ESTÁ EL CAMBIO
         subtitles: "El felino es un animal sagrado, vinculado al poder, la guerra y el gobierno..."
     }
 };
