@@ -38,49 +38,78 @@
     </div>
 
     <a-scene 
-        embedded 
-        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; patternRatio: 0.75;"
-        renderer="logarithmicDepthBuffer: true;"
-        vr-mode-ui="enabled: false"
-        gesture-detector 
-        id="scene">
+            embedded 
+            arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; patternRatio: 0.75;"
+            renderer="logarithmicDepthBuffer: true; colorManagement: true;"
+            vr-mode-ui="enabled: false"
+            gesture-detector 
+            id="scene">
 
-        <a-assets>
-            <a-asset-item id="modelo-huaco" src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"></a-asset-item>
-        </a-assets>
+            <a-light type="ambient" intensity="1"></a-light>
+            <a-light type="directional" intensity="1.5" position="2 4 4"></a-light>
 
-        <a-marker 
-            type="pattern" 
-            url="assets/markers/huaco-retrato.patt" 
-            raycaster="objects: .clickable" 
-            emitevents="true" 
-            cursor="fuse: false; rayOrigin: mouse;" 
-            id="marker-huaco">
-            <a-entity gltf-model="#modelo-huaco" scale="0.5 0.5 0.5" class="clickable" gesture-handler></a-entity>
-        </a-marker>
+            <a-assets>
+                <a-asset-item id="modelo-huaco" src="assets/models/huaco.glb"></a-asset-item>
+                <a-asset-item id="modelo-felino" src="assets/models/felino.glb"></a-asset-item>
+            </a-assets>
 
-        <a-marker 
-            type="pattern" 
-            url="assets/markers/pattern-nariguera-de-oro.patt" 
-            raycaster="objects: .clickable" 
-            emitevents="true" 
-            cursor="fuse: false; rayOrigin: mouse;" 
-            id="marker-oro">
-            <a-box position="0 0.5 0" material="color: #FFD700; opacity: 0.9" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000" class="clickable" gesture-handler></a-box>
-        </a-marker>
+            <a-marker 
+                type="pattern" 
+                url="assets/markers/huaco-retrato.patt" 
+                raycaster="objects: .clickable" 
+                emitevents="true" 
+                cursor="fuse: false; rayOrigin: mouse;" 
+                id="marker-huaco">
+                <a-entity 
+                    gltf-model="#modelo-huaco" 
+                    scale="2 2 2" 
+                    position="0 0 0" 
+                    rotation="0 0 0"
+                    class="clickable" 
+                    gesture-handler>
+                </a-entity>
+            </a-marker>
 
-        <a-marker 
-            type="pattern" 
-            url="assets/markers/felino.patt" 
-            raycaster="objects: .clickable" 
-            emitevents="true" 
-            cursor="fuse: false; rayOrigin: mouse;" 
-            id="marker-felino">
-            <a-sphere position="0 0.5 0" radius="0.5" material="color: #CD5C5C; opacity: 0.9" class="clickable" gesture-handler></a-sphere>
-        </a-marker>
+            <a-marker 
+                type="pattern" 
+                url="assets/markers/pattern-nariguera-de-oro.patt" 
+                raycaster="objects: .clickable" 
+                emitevents="true" 
+                cursor="fuse: false; rayOrigin: mouse;" 
+                id="marker-oro">
+                
+                <a-torus 
+                    color="#FFD700" 
+                    arc="280" 
+                    radius="1.2" 
+                    radius-tubular="0.15"
+                    rotation="90 180 0" 
+                    position="0 0.5 0"
+                    material="metalness: 1; roughness: 0.2;"
+                    class="clickable" 
+                    gesture-handler>
+                </a-torus>
+            </a-marker>
 
-        <a-entity camera></a-entity>
-    </a-scene>
+            <a-marker 
+                type="pattern" 
+                url="assets/markers/felino.patt" 
+                raycaster="objects: .clickable" 
+                emitevents="true" 
+                cursor="fuse: false; rayOrigin: mouse;" 
+                id="marker-felino">
+                
+                <a-entity 
+                    gltf-model="#modelo-felino" 
+                    scale="0.5 0.5 0.5" 
+                    position="0 0 0" 
+                    class="clickable" 
+                    gesture-handler>
+                </a-entity>
+            </a-marker>
+
+            <a-entity camera></a-entity>
+        </a-scene>
 
     <script src="script.js"></script>
 </body>
