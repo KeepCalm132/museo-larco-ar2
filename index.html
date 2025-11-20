@@ -53,22 +53,24 @@
                 <a-asset-item id="modelo-felino" src="assets/models/felino.glb"></a-asset-item>
             </a-assets>
 
-            <a-marker 
-                type="pattern" 
-                url="assets/markers/huaco-retrato.patt" 
-                raycaster="objects: .clickable" 
-                emitevents="true" 
-                cursor="fuse: false; rayOrigin: mouse;" 
-                id="marker-huaco">
-                <a-entity 
-                    gltf-model="#modelo-huaco" 
-                    scale="2 2 2" 
-                    position="0 0 0" 
-                    rotation="0 0 0"
-                    class="clickable" 
-                    gesture-handler>
-                </a-entity>
-            </a-marker>
+        <a-marker 
+            type="pattern" 
+            url="assets/markers/huaco-retrato.patt" 
+            raycaster="objects: .clickable" 
+            emitevents="true" 
+            cursor="fuse: false; rayOrigin: mouse;" 
+            id="marker-huaco">
+            
+            <a-entity 
+                gltf-model="#modelo-huaco" 
+                scale="15 15 15" 
+                position="0 0 0" 
+                class="clickable" 
+                gesture-handler>
+            </a-entity>
+
+            <a-box position="0 0.5 1" material="color: red; opacity: 0.5" scale="0.5 0.5 0.5"></a-box>
+        </a-marker>
 
             <a-marker 
                 type="pattern" 
